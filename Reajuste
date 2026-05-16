@@ -39,3 +39,26 @@ public class Reajuste {
                 return;
             }
 
+            switch (entrada.trim()) {
+                case "1": reajusteUm();      break;
+                case "2": reajusteGeral();   break;
+                case "0": continuar = false; break;
+                default:  opcaoInvalidaReajuste();
+            }
+        }
+    }
+
+    /** Mensagem mostrada quando o usuário digita uma opção que não existe. */
+    private static void opcaoInvalidaReajuste() {
+        Util.erro("Opção inválida. Digite 0, 1 ou 2.");
+    }
+
+    /**
+     * Reajuste do preço de um único produto.
+     */
+    public static void reajusteUm() {
+        boolean novoReajuste = true;
+        while (novoReajuste) {
+            String nome = Util.lerTexto("PRODUTO :");
+            if (nome == null) return;
+
