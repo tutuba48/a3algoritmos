@@ -73,5 +73,27 @@ public class IconePizza {
         g.fillOval(17, 36, 13, 11);
         g.fillOval(36, 37, 14, 11);
         g.fillOval(24, 26, 10, 8);
+
+        // 6) Calabresa (círculos vermelho-escuro)
+        g.setColor(new Color(155, 25, 20));
+        int[] xs = {18, 38, 27, 42, 22, 36};
+        int[] ys = {21, 28, 37, 44, 45, 22};
+        for (int i = 0; i < xs.length; i++) {
+            g.fillOval(xs[i], ys[i], 7, 7);
+        }
+        // Brilho da calabresa (pontinhos mais claros no meio)
+        g.setColor(new Color(200, 60, 50));
+        for (int i = 0; i < xs.length; i++) {
+            g.fillOval(xs[i] + 2, ys[i] + 2, 2, 2);
+        }
+
+        // 7) Folhas de manjericão (toque italiano)
+        g.setColor(new Color(40, 130, 55));
+        g.fillOval(30, 24, 5, 8);
+        g.fillOval(23, 32, 5, 7);
+        g.fillOval(43, 32, 5, 7);
+
+        g.dispose();
+        return img;
     }
 }
