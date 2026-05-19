@@ -81,3 +81,28 @@ public class Reajuste {
                     -100.0);
             if (Double.isNaN(percentual)) return;
 
+            double novoPreco = Estoque.precos[idx] * (1 + percentual / 100.0);
+            if (novoPreco <= 0) {
+                Util.erro("O preço resultante deve ser maior que zero. Operação cancelada.");
+                novoReajuste = Util.confirmar("NOVO REAJUSTE ( S/N ) ?");
+                continue;
+            }
+
+            String resumo = dados
+                    + " PERCENTUAL  : " + Util.formatarPreco(percentual) + "%\n"
+                    + " NOVO PREÇO  : " + Util.formatarPreco(novoPreco) + "\n";
+
+            if (Util.confirmar(resumo + "\nCONFIRMA REAJUSTE ( S/N ) ?")) {
+                Estoque.precos[idx] = novoPreco;
+                Util.info("Reajuste aplicado com sucesso!");
+            } else {
+                Util.info("Reajuste cancelado.");
+            }
+
+            novoReajuste = Util.confirmar("NOVO REAJUSTE ( S/N ) ?");
+        }
+    }
+
+    /**
+     * Reajuste de todos os produtos por um mesmo percentual.
+     */
