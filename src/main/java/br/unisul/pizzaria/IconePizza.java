@@ -49,5 +49,29 @@ public class IconePizza {
         Graphics2D g = img.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // 1) Sombra sutil deslocada
+        g.setColor(new Color(0, 0, 0, 50));
+        g.fillOval(6, 8, 54, 54);
+
+        // 2) Borda externa (massa dourada)
+        g.setColor(new Color(222, 170, 95));
+        g.fillOval(4, 4, 56, 56);
+
+        // 3) Crosta interna (mais escura, dá relevo)
+        g.setColor(new Color(190, 130, 65));
+        g.fillOval(6, 6, 52, 52);
+
+        // 4) Molho de tomate (vermelho italiano)
+        g.setColor(new Color(215, 60, 45));
+        g.fillOval(10, 10, 44, 44);
+
+        // 5) Manchas de queijo derretido (amarelo claro)
+        g.setColor(new Color(255, 228, 130));
+        g.fillOval(14, 14, 16, 13);
+        g.fillOval(34, 17, 14, 11);
+        g.fillOval(17, 36, 13, 11);
+        g.fillOval(36, 37, 14, 11);
+        g.fillOval(24, 26, 10, 8);
     }
 }
