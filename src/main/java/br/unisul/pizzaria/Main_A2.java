@@ -13,11 +13,24 @@ public class Main {
     public static void main(String[] args) {
         Estoque.preCadastrarInsumos();
 
-        JOptionPane.showMessageDialog(
-                null,
-                "Bem-vindo ao Sistema de Controle de Estoque\nPizzaria da Unisul Ltda.",
-                "Bem-vindo",
-                JOptionPane.INFORMATION_MESSAGE);
+        // Mensagem de boas-vindas centralizada (usando HTML para melhor visual)
+        String boasVindas =
+                "<html>"
+              + "<div style='text-align: center; padding: 12px; width: 360px;'>"
+              + "<h2 style='margin-bottom: 2px;'>PIZZARIA DA UNISUL LTDA.</h2>"
+              + "<h3 style='margin-top: 0;'>Sistema de Controle de Estoque</h3>"
+              + "<hr>"
+              + "<p><b>Seja bem-vindo!</b></p>"
+              + "<p>O sistema foi iniciado com <b>" + Estoque.totalProdutos
+              + "</b> insumos pré-cadastrados.</p>"
+              + "<br>"
+              + "<p style='font-size: 11px; color: #555;'>"
+              + "Trabalho A3 — Algoritmos e Programação<br>"
+              + "UNISUL — 1ª Fase de Ciências da Computação"
+              + "</p>"
+              + "</div>"
+              + "</html>";
+        Util.mensagem("Bem-vindo", boasVindas);
 
         boolean continuar = true;
         while (continuar) {
@@ -55,11 +68,22 @@ public class Main {
             }
         }
 
-        JOptionPane.showMessageDialog(
-                null,
-                "Sistema finalizado. Até logo!",
-                "Encerrando",
-                JOptionPane.INFORMATION_MESSAGE);
+        // Mensagem de despedida centralizada
+        String despedida =
+                "<html>"
+              + "<div style='text-align: center; padding: 12px; width: 360px;'>"
+              + "<h2 style='margin-bottom: 2px;'>Até logo!</h2>"
+              + "<hr>"
+              + "<p>Sistema finalizado.</p>"
+              + "<p>Obrigado por utilizar o<br>"
+              + "<b>Controle de Estoque da Pizzaria</b>.</p>"
+              + "<br>"
+              + "<p style='font-size: 11px; color: #555;'>"
+              + "Equipe A3 — UNISUL"
+              + "</p>"
+              + "</div>"
+              + "</html>";
+        Util.mensagem("Encerrando", despedida);
         System.exit(0);
     }
 
