@@ -38,3 +38,54 @@ public class Relatorios {
             if (entrada == null) {
                 return;
             }
+
+            switch (entrada.trim()) {
+                case "1": listaPrecos();             break;
+                case "2": balancoFisicoFinanceiro(); break;
+                case "3": produtosEmFalta();         break;
+                case "4": produtosEstoqueBaixo();    break;
+                case "0": continuar = false;         break;
+                default:  opcaoInvalidaRelatorios();
+            }
+        }
+    }
+
+    /** Mensagem mostrada quando o usuário digita uma opção que não existe. */
+    private static void opcaoInvalidaRelatorios() {
+        Util.erro("Opção inválida. Digite um número entre 0 e 4.");
+    }
+
+    /**
+     * Tela 1.4.1 — Lista de Preços em ordem alfabética.
+     */
+    public static void listaPrecos() {
+        if (Estoque.vazio()) {
+            Util.erro("Não há produtos cadastrados.");
+            return;
+        }
+
+        String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(centralizarMono(Util.EMPRESA, 70)).append("\n");
+        sb.append(centralizarMono(Util.SISTEMA, 70)).append("\n\n");
+        sb.append(dataAtual).append("        ");
+        sb.append(centralizarMono("LISTA DE PREÇOS", 36));
+        sb.append("        PG 001\n");
+        sb.append(linha(70)).append("\n");
+        sb.append(String.format("%-40s %-5s %15s%n", "PRODUTO", "UND", "PREÇO"));
+        sb.append(linha(70)).append("\n");
+
+        int[] ordem = Estoque.indicesOrdenadosAlfabeticamente();
+        for (int i = 0; i < ordem.length; i++) {
+            int idx = ordem[i];
+            sb.append(String.format(
+                    "%-40s %-5s %15s%n",
+                    truncar(Estoque.nomes[idx], 40),
+                    Estoque.unidades[idx],
+                    Util.formatarPreco(Estoque.precos[idx])));
+        }
+        sb.append(linha(70)).append("\n");
+        sb.append("Total de produtos listados: ").append(Estoque.totalProdutos).append("\n");
+
+        Util.exibirRelatorio("Lista de Preços", sb.toString());
+    }
