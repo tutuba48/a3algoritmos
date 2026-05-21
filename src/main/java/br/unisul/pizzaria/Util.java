@@ -129,4 +129,8 @@ public class Util {
         JOptionPane.showMessageDialog(null, scroll, titulo,
                 JOptionPane.PLAIN_MESSAGE, IconePizza.get());
     }
+
+    public static String formatarPreco(double valor) {
+        return String.format("%,.2f", valor);
+    }
 }
