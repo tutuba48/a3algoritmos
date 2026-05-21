@@ -1,4 +1,4 @@
-package br.unisul.pizzaria.estoque;
+package br.unisul.pizzaria;
 
 import javax.swing.JOptionPane;
 
@@ -27,4 +27,24 @@ public class Movimentacao {
                     texto,
                     "Pizzaria da Unisul — Movimentação",
                     JOptionPane.PLAIN_MESSAGE,
-                    IconePizza.get()
+                    IconePizza.get(),
+                    null,
+                    "");
+            String entrada = (resp == null) ? null : resp.toString();
+            if (entrada == null) {
+                return;
+            }
+
+            switch (entrada.trim()) {
+                case "1": entrada();         break;
+                case "2": saida();           break;
+                case "0": continuar = false; break;
+                default:  opcaoInvalidaMovimentacao();
+            }
+        }
+    }
+
+    /** Mensagem mostrada quando o usuário digita uma opção que não existe. */
+    private static void opcaoInvalidaMovimentacao() {
+        Util.erro("Opção inválida. Digite 0, 1 ou 2.");
+    }
