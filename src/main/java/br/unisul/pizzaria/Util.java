@@ -93,4 +93,13 @@ public class Util {
             }
         }
     }
+
+    public static boolean confirmar(String pergunta) {
+        Object[] opcoes = {"Sim", "Não"};
+        int resp = JOptionPane.showOptionDialog(
+                null, pergunta, "Confirmação",
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                IconePizza.get(), opcoes, opcoes[0]);
+        return resp == JOptionPane.YES_OPTION;
+    }
 }
