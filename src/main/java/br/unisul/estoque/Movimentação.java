@@ -1,4 +1,3 @@
-package br.unisul.pizzaria;
 package br.unisul.estoque;
 import javax.swing.JOptionPane;
 
