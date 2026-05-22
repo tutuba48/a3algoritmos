@@ -1,4 +1,4 @@
-package br.unisul.pizzaria.estoque;
+package br.unisul.estoque;
 
 /**
  * Estoque - armazenamento de produtos em vetores paralelos.
