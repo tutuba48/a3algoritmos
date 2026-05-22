@@ -106,3 +106,35 @@ public class Reajuste {
     /**
      * Reajuste de todos os produtos por um mesmo percentual.
      */
+public static void reajusteGeral() {
+        double percentual = Util.lerDouble(
+                "PERCENTUAL DE REAJUSTE GERAL (negativo para desconto):",
+                -100.0);
+        if (Double.isNaN(percentual)) return;
+
+        // Valida que nenhum produto ficaria com preço <= 0
+        for (int i = 0; i < Estoque.totalProdutos; i++) {
+            double novo = Estoque.precos[i] * (1 + percentual / 100.0);
+            if (novo <= 0) {
+                Util.erro("O reajuste deixaria o produto '" + Estoque.nomes[i]
+                        + "' com preço inválido. Operação cancelada.");
+                return;
+            }
+        }
+
+        String aviso = Util.cabecalho("REAJUSTE GERAL")
+                + " Será aplicado o percentual de " + Util.formatarPreco(percentual)
+                + "%\n em " + Estoque.totalProdutos + " produto(s).\n";
+
+        if (!Util.confirmar(aviso + "\nCONFIRMA REAJUSTE GERAL ( S/N ) ?")) {
+            Util.info("Reajuste geral cancelado.");
+            return;
+        }
+
+        for (int i = 0; i < Estoque.totalProdutos; i++) {
+            Estoque.precos[i] = Estoque.precos[i] * (1 + percentual / 100.0);
+        }
+        Util.info("Reajuste geral aplicado com sucesso em "
+                + Estoque.totalProdutos + " produto(s)!");
+    }
+}
