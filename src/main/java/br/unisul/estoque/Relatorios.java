@@ -134,3 +134,43 @@ public class Relatorios {
 
         Util.exibirRelatorio("Balanço Físico-Financeiro", sb.toString());
     }
+
+    /**
+     * Relatório extra: produtos com quantidade igual a zero.
+     */
+    public static void produtosEmFalta() {
+        if (Estoque.vazio()) {
+            Util.erro("Não há produtos cadastrados.");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(centralizarMono(Util.EMPRESA, 50)).append("\n");
+        sb.append(centralizarMono(Util.SISTEMA, 50)).append("\n\n");
+        sb.append(centralizarMono("PRODUTOS EM FALTA (quantidade = 0)", 50)).append("\n");
+        sb.append(linha(50)).append("\n");
+
+        int contador = 0;
+        int[] ordem = Estoque.indicesOrdenadosAlfabeticamente();
+        for (int i = 0; i < ordem.length; i++) {
+            int idx = ordem[i];
+            if (Estoque.quantidades[idx] == 0) {
+                sb.append(String.format("%-40s %s%n",
+                        Estoque.nomes[idx], Estoque.unidades[idx]));
+                contador++;
+            }
+        }
+        sb.append(linha(50)).append("\n");
+        sb.append("Total: ").append(contador).append(" produto(s) em falta.\n");
+
+        Util.exibirRelatorio("Produtos em Falta", sb.toString());
+    }
+
+    /**
+     * Relatório extra: produtos com quantidade abaixo do limiar (5 unidades).
+     */
+    public static void produtosEstoqueBaixo() {
+        if (Estoque.vazio()) {
+            Util.erro("Não há produtos cadastrados.");
+            return;
+        }
