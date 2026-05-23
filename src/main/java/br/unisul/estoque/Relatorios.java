@@ -89,3 +89,48 @@ public class Relatorios {
 
         Util.exibirRelatorio("Lista de Preços", sb.toString());
     }
+
+    /**
+     * Tela 1.4.2 — Balanço Físico-Financeiro.
+     */
+    public static void balancoFisicoFinanceiro() {
+        if (Estoque.vazio()) {
+            Util.erro("Não há produtos cadastrados.");
+            return;
+        }
+
+        String dataAtual = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(centralizarMono(Util.EMPRESA, 85)).append("\n");
+        sb.append(centralizarMono(Util.SISTEMA, 85)).append("\n\n");
+        sb.append(dataAtual).append("        ");
+        sb.append(centralizarMono("BALANÇO FÍSICO-FINANCEIRO", 51));
+        sb.append("        PG 001\n");
+        sb.append(linha(85)).append("\n");
+        sb.append(String.format("%-30s %-5s %15s %6s %15s%n",
+                "PRODUTO", "UND", "PREÇO UNIT.", "QTDE", "PREÇO TOTAL"));
+        sb.append(linha(85)).append("\n");
+
+        double valorTotalEstoque = 0.0;
+        int totalItens = 0;
+        int[] ordem = Estoque.indicesOrdenadosAlfabeticamente();
+        for (int i = 0; i < ordem.length; i++) {
+            int idx = ordem[i];
+            double subtotal = Estoque.precos[idx] * Estoque.quantidades[idx];
+            valorTotalEstoque += subtotal;
+            totalItens += Estoque.quantidades[idx];
+            sb.append(String.format(
+                    "%-30s %-5s %15s %6d %15s%n",
+                    truncar(Estoque.nomes[idx], 30),
+                    Estoque.unidades[idx],
+                    Util.formatarPreco(Estoque.precos[idx]),
+                    Estoque.quantidades[idx],
+                    Util.formatarPreco(subtotal)));
+        }
+        sb.append(linha(85)).append("\n");
+        sb.append(String.format("TOTAL DE ITENS NO ESTOQUE : %d%n", totalItens));
+        sb.append(String.format("VALOR TOTAL DO ESTOQUE    : %s%n",
+                Util.formatarPreco(valorTotalEstoque)));
+
+        Util.exibirRelatorio("Balanço Físico-Financeiro", sb.toString());
+    }
