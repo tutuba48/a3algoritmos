@@ -203,3 +203,34 @@ public class Relatorios {
 
         Util.exibirRelatorio("Produtos com Estoque Baixo", sb.toString());
     }
+
+    /** Gera uma linha horizontal de traços com o tamanho dado. */
+    private static String linha(int tamanho) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tamanho; i++) {
+            sb.append('-');
+        }
+        return sb.toString();
+    }
+
+    /** Trunca um texto se ultrapassar o limite. */
+    private static String truncar(String texto, int limite) {
+        if (texto == null) return "";
+        if (texto.length() <= limite) return texto;
+        return texto.substring(0, limite);
+    }
+
+    /**
+     * Centraliza para uso em fonte monoespaçada (relatórios) — não retorna
+     * o texto cru: completa com espaços à esquerda para centralizar.
+     */
+    private static String centralizarMono(String texto, int largura) {
+        if (texto == null) return "";
+        if (texto.length() >= largura) return texto;
+        int espacos = (largura - texto.length()) / 2;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < espacos; i++) sb.append(' ');
+        sb.append(texto);
+        return sb.toString();
+    }
+}
