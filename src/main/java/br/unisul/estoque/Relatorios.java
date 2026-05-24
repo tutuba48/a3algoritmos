@@ -174,3 +174,32 @@ public class Relatorios {
             Util.erro("Não há produtos cadastrados.");
             return;
         }
+
+        final int LIMIAR = 5;
+        StringBuilder sb = new StringBuilder();
+        sb.append(centralizarMono(Util.EMPRESA, 60)).append("\n");
+        sb.append(centralizarMono(Util.SISTEMA, 60)).append("\n\n");
+        sb.append(centralizarMono(
+                "PRODUTOS COM ESTOQUE BAIXO (quantidade < " + LIMIAR + ")", 60))
+          .append("\n");
+        sb.append(linha(60)).append("\n");
+        sb.append(String.format("%-40s %-5s %6s%n", "PRODUTO", "UND", "QTDE"));
+        sb.append(linha(60)).append("\n");
+
+        int contador = 0;
+        int[] ordem = Estoque.indicesOrdenadosAlfabeticamente();
+        for (int i = 0; i < ordem.length; i++) {
+            int idx = ordem[i];
+            if (Estoque.quantidades[idx] < LIMIAR) {
+                sb.append(String.format("%-40s %-5s %6d%n",
+                        Estoque.nomes[idx],
+                        Estoque.unidades[idx],
+                        Estoque.quantidades[idx]));
+                contador++;
+            }
+        }
+        sb.append(linha(60)).append("\n");
+        sb.append("Total: ").append(contador).append(" produto(s) com estoque baixo.\n");
+
+        Util.exibirRelatorio("Produtos com Estoque Baixo", sb.toString());
+    }
