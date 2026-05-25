@@ -168,3 +168,72 @@ public class Cadastro {
             novaAlteracao = Util.confirmar("NOVA ALTERAÇÃO ( S/N ) ?");
         }
     }
+
+    /**
+     * Tela 1.1.3 — Consulta de Produto.
+     */
+    public static void consultar() {
+        boolean novaConsulta = true;
+        while (novaConsulta) {
+            if (Estoque.vazio()) {
+                Util.erro("Não há produtos cadastrados.");
+                return;
+            }
+
+            String nome = Util.lerTexto("NOME do produto a consultar :");
+            if (nome == null) return;
+
+            int idx = Estoque.buscar(nome);
+            if (idx == -1) {
+                Util.erro("Produto não encontrado: " + nome);
+            } else {
+                String dados = Util.cabecalho("CONSULTA DE PRODUTO")
+                        + " NOME       : " + Estoque.nomes[idx] + "\n"
+                        + " PREÇO      : " + Util.formatarPreco(Estoque.precos[idx]) + "\n"
+                        + " UNIDADE    : " + Estoque.unidades[idx] + "\n"
+                        + " QUANTIDADE : " + Estoque.quantidades[idx] + "\n";
+                Util.mensagem("Consulta", dados);
+            }
+
+            novaConsulta = Util.confirmar("NOVA CONSULTA ( S/N ) ?");
+        }
+    }
+
+    /**
+     * Tela 1.1.4 — Exclusão de Produto.
+     */
+    public static void excluir() {
+        boolean novaExclusao = true;
+        while (novaExclusao) {
+            if (Estoque.vazio()) {
+                Util.erro("Não há produtos cadastrados.");
+                return;
+            }
+
+            String nome = Util.lerTexto("NOME do produto a excluir :");
+            if (nome == null) return;
+
+            int idx = Estoque.buscar(nome);
+            if (idx == -1) {
+                Util.erro("Produto não encontrado: " + nome);
+                novaExclusao = Util.confirmar("NOVA EXCLUSÃO ( S/N ) ?");
+                continue;
+            }
+
+            String dados = Util.cabecalho("EXCLUSÃO DE PRODUTO")
+                    + " NOME       : " + Estoque.nomes[idx] + "\n"
+                    + " PREÇO      : " + Util.formatarPreco(Estoque.precos[idx]) + "\n"
+                    + " UNIDADE    : " + Estoque.unidades[idx] + "\n"
+                    + " QUANTIDADE : " + Estoque.quantidades[idx] + "\n";
+
+            if (Util.confirmar(dados + "\nCONFIRMA EXCLUSÃO ( S/N ) ?")) {
+                Estoque.removerNaPosicao(idx);
+                Util.info("Produto excluído com sucesso!");
+            } else {
+                Util.info("Exclusão cancelada.");
+            }
+
+            novaExclusao = Util.confirmar("NOVA EXCLUSÃO ( S/N ) ?");
+        }
+    }
+}
