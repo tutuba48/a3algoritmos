@@ -47,3 +47,47 @@ public class Movimentacao {
     private static void opcaoInvalidaMovimentacao() {
         Util.erro("Opção inválida. Digite 0, 1 ou 2.");
     }
+    
+    /**
+     * Tela 1.2.1 — Entrada de Produto.
+     */
+    public static void entrada() {
+        boolean novaEntrada = true;
+        while (novaEntrada) {
+            if (Estoque.vazio()) {
+                Util.erro("Não há produtos cadastrados.");
+                return;
+            }
+
+            String nome = Util.lerTexto("PRODUTO :");
+            if (nome == null) return;
+
+            int idx = Estoque.buscar(nome);
+            if (idx == -1) {
+                Util.erro("Produto não encontrado: " + nome);
+                novaEntrada = Util.confirmar("NOVA ENTRADA ( S/N ) ?");
+                continue;
+            }
+
+            int qtdAtual = Estoque.quantidades[idx];
+            int qtdEntrada = Util.lerInt("QTDE ENTRADA :", 1);
+            if (qtdEntrada == Integer.MIN_VALUE) return;
+
+            int qtdFinal = qtdAtual + qtdEntrada;
+
+            String resumo = Util.cabecalho("MOVIMENTAÇÃO — ENTRADA DE PRODUTO")
+                    + " PRODUTO      : " + Estoque.nomes[idx] + "\n"
+                    + " QTDE ATUAL   : " + qtdAtual + "\n"
+                    + " QTDE ENTRADA : " + qtdEntrada + "\n"
+                    + " QTDE FINAL   : " + qtdFinal + "\n";
+
+            if (Util.confirmar(resumo + "\nCONFIRMA ENTRADA ( S/N ) ?")) {
+                Estoque.quantidades[idx] = qtdFinal;
+                Util.info("Entrada registrada com sucesso!");
+            } else {
+                Util.info("Entrada cancelada.");
+            }
+
+            novaEntrada = Util.confirmar("NOVA ENTRADA ( S/N ) ?");
+        }
+    }
