@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 public class Main {
 
     public static void main(String[] args) {
+        // Pré-cadastra insumos típicos de pizzaria para facilitar o uso
         Estoque.preCadastrarInsumos();
 
         // Mensagem de boas-vindas centralizada (usando HTML para melhor visual)
@@ -32,6 +33,7 @@ public class Main {
               + "</html>";
         Util.mensagem("Bem-vindo", boasVindas);
 
+        // Loop do menu principal
         boolean continuar = true;
         while (continuar) {
             String texto = Util.cabecalho("MENU PRINCIPAL")
@@ -43,6 +45,7 @@ public class Main {
                     + " 0 — FINALIZAR\n\n"
                     + " OPÇÃO :";
 
+            // Usa ícone customizado de pizza no lugar da interrogação padrão
             Object resp = JOptionPane.showInputDialog(
                     null,
                     texto,
@@ -53,8 +56,12 @@ public class Main {
                     "");
             String entrada = (resp == null) ? null : resp.toString();
             if (entrada == null) {
-                continuar = false;
-                continue;
+                // Usuário apertou Cancelar — confirma se quer sair
+                if (Util.confirmar("Deseja realmente finalizar o sistema?")) {
+                    break;
+                } else {
+                    continue;
+                }
             }
 
             switch (entrada.trim()) {
